@@ -5,7 +5,7 @@ class TattooAnimation {
         this.dpr = window.devicePixelRatio || 1;
 
         const defaultOptions = {
-            fps: 8,
+            fps: 1,
             imageUrls: []
         };
 
