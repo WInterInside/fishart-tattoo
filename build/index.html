@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 
-@@include('components/page-blocks/_head.html',{
-    "lang":"en",
-    "title": "FISHART: ♡Профессиональная татуировка♡",
-    "description":"♡Профессиональная татуировка♡",
-    "keywords":"",
-    "favicon":"assets/favicons/favicon",
-})
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="♡Профессиональная татуировка♡" />
+        <meta name="keywords" content="" />
+        <link rel="shortcut icon" href="assets/favicons/favicon.png" type="image/x-icon" />
+        <link rel="stylesheet" href="css/style.min.css" />
+        <title>FISHART: ♡Профессиональная татуировка♡</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+</html>
+
 
 <body>
-    @@include('components/page-blocks/_header.html')
+    <header class="header"></header>
+
 
     <div className="wrapper" data-element="wrapper">
         <main class="main">
@@ -67,11 +80,13 @@
             </section>
         </main>
 
-        @@include('components/page-blocks/_footer.html')
+        <footer class="footer"></footer>
+
 
     </div>
 
-    @@include('components/page-blocks/_scripts.html')
+    <script src="js/main.min.js"></script>
+
 </body>
 
 </html>
