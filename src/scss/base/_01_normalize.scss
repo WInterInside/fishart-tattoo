@@ -1,0 +1,275 @@
+/*!
+ * Combined and Optimized Reset/Normalize
+ * Based on modern-normalize.css (MIT License) and The New CSS Reset (MIT License)
+ * Updated circa 2025
+ */
+
+/* The New CSS Reset - Core Unset Logic (optimized) */
+/* This section aims to remove most browser default styles. */
+*:where(
+        :not(html, iframe, canvas, img, svg, video, audio):not(
+                svg *,
+                g,
+                path,
+                symbol *
+            )
+    ) {
+    all: unset;
+    display: revert;
+}
+
+/* Inherit box-sizing to all elements */
+/* This is crucial and shared by both, placed here for immediate effect after the unset. */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Document & HTML Base */
+html {
+    line-height: 1.5; /* Consistent line height for readability */
+    -webkit-text-size-adjust: 100%; /* Prevent font size adjustments on iOS */
+    -moz-text-size-adjust: none; /* Fix mobile Safari font-size on landscape */
+    text-size-adjust: none;
+    -webkit-font-smoothing: antialiased; /* Improve text rendering */
+    -moz-osx-font-smoothing: grayscale; /* Improve text rendering */
+}
+
+/* Sections */
+/* Remove the margin from the `body` element. */
+body {
+    margin: 0;
+}
+
+/* Render the `main` element consistently. */
+main {
+    display: block; /* Ensures `main` behaves as a block element */
+}
+
+/* Headings (h1 is often styled uniquely, so reset to default browser values) */
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+/* Grouping content */
+hr {
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible;
+    border: none;
+    border-top: 1px solid currentColor; /* A modern default for HR */
+}
+
+/* Text-level semantics */
+a {
+    background-color: transparent; /* Remove gray background on active links in IE 10 */
+    text-decoration-skip-ink: auto; /* Modern link underline behavior */
+    cursor: revert; /* Reapply pointer cursor */
+}
+
+abbr[title] {
+    border-bottom: none;
+    text-decoration: underline dotted;
+}
+
+b,
+strong {
+    font-weight: bolder;
+}
+
+code,
+kbd,
+samp,
+pre {
+    font-family: monospace, monospace;
+    font-size: 1em;
+}
+
+small {
+    font-size: 80%;
+}
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+sup {
+    top: -0.5em;
+}
+
+/* Embedded content */
+img {
+    border-style: none; /* Remove border on images inside links */
+    max-width: 100%; /* Ensure images are responsive */
+    display: block; /* Prevents extra space below image */
+}
+
+picture,
+video {
+    display: block; /* Consistent display for media elements */
+}
+
+/* Forms */
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+}
+
+button,
+input {
+    overflow: visible;
+}
+
+button,
+select {
+    text-transform: none;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button;
+    appearance: button;
+}
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+    border-style: none;
+    padding: 0;
+}
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+    outline: 1px dotted ButtonText;
+}
+
+fieldset {
+    padding: 0.35em 0.75em 0.625em;
+}
+
+legend {
+    box-sizing: border-box;
+    color: inherit;
+    display: table;
+    max-width: 100%;
+    padding: 0;
+    white-space: normal;
+}
+
+progress {
+    vertical-align: baseline;
+}
+
+textarea {
+    overflow: auto;
+    white-space: revert; /* Revert for Safari textareas */
+    -webkit-user-select: auto; /* Allow text input in Safari when body has user-select:none */
+}
+
+[type="checkbox"],
+[type="radio"] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+[type="search"] {
+    -webkit-appearance: textfield;
+    appearance: textfield;
+    outline-offset: -2px;
+}
+
+[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    appearance: button;
+    font: inherit;
+}
+
+/* Interactive */
+details {
+    display: block;
+}
+
+summary {
+    display: list-item;
+}
+
+dialog {
+    display: block; /* Consistent display */
+    padding: 1em; /* Basic padding for usability */
+    all: revert; /* Revert Modal native behavior */
+    box-sizing: border-box;
+}
+
+/* Misc */
+template,
+[hidden] {
+    display: none;
+}
+
+/* Specific resets/fixes from "The New CSS Reset" not covered above */
+ol,
+ul,
+menu,
+summary {
+    list-style: none; /* Remove list styles (bullets/numbers) */
+}
+
+table {
+    border-collapse: collapse; /* Removes spacing between cells in tables */
+}
+
+meter {
+    -webkit-appearance: revert;
+    appearance: revert;
+}
+
+::placeholder {
+    color: unset; /* Reset default text opacity of input placeholder */
+}
+
+:where([contenteditable]:not([contenteditable="false"])) {
+    -moz-user-modify: read-write;
+    -webkit-user-modify: read-write;
+    overflow-wrap: break-word;
+    -webkit-line-break: after-white-space;
+    -webkit-user-select: auto;
+}
+
+:where([draggable="true"]) {
+    -webkit-user-drag: element; /* Apply back the draggable feature */
+}
+
+::-webkit-details-marker {
+    display: none; /* Remove details summary webkit styles */
+}

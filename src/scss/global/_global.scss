@@ -1,0 +1,149 @@
+@use "base/mixins" as mixins;
+@use "base/variables" as vars;
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+    width: 100%;
+    position: relative;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    font-family: "Lora", serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.4;
+    color: #fff;
+    @include mixins.scrollbar();
+
+    &.is-overflow {
+        overflow: hidden;
+    }
+}
+
+.wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    min-height: 100%;
+    overflow: hidden;
+}
+
+.main {
+    position: relative;
+    flex-grow: 1;
+}
+
+.container {
+    width: 100%;
+    padding: 0 70px;
+    margin: 0 auto;
+}
+
+img {
+    max-width: 100%;
+    vertical-align: bottom;
+}
+
+ul,
+ol,
+li,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+*:focus {
+    outline: none !important;
+}
+
+a {
+    text-decoration: none;
+    transition: color #{vars.$duration};
+}
+
+p {
+    margin: 1em 0;
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+button {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.icon {
+    flex-shrink: 0;
+    fill: currentColor;
+}
+
+.hidden {
+    pointer-events: none;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+a,
+input,
+label,
+button {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+a,
+input,
+label,
+span,
+button::selection {
+    background: transparent;
+}
+
+a,
+input,
+label,
+button::-moz-selection {
+    background: transparent;
+}
+
+@media #{vars.$large} {
+    .container {
+        padding: 0 20px;
+    }
+}

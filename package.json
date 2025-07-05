@@ -1,0 +1,35 @@
+{
+  "name": "winter-dev",
+  "version": "3.1.1",
+  "description": "",
+  "main": "gulpfile.mjs",
+  "scripts": {
+    "html": "gulp",
+    "start": "gulp",
+    "build": "gulp build"
+  },
+  "author": "Tsirkulev Maksim",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0",
+    "browser-sync": "^3.0.0",
+    "cssnano": "^7.0.3",
+    "del": "^7.1.0",
+    "gulp": "^5.0.0",
+    "gulp-autoprefixer": "^9.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-file-include": "^2.3.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^10.0.0",
+    "gulp-sass": "^6.0.1",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-terser": "^2.1.0",
+    "gulp-ttf2woff2": "^5.0.0",
+    "sass": "^1.89.2"
+  },
+  "dependencies": {
+    "fs-extra": "^11.3.0"
+  }
+}
