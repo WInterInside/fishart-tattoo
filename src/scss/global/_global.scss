@@ -35,13 +35,12 @@ body {
 .wrapper {
     display: flex;
     flex-flow: column nowrap;
-    min-height: 100%;
+    min-height: 100vh;
     overflow: hidden;
 }
 
 .main {
     position: relative;
-    flex-grow: 1;
 }
 
 .container {
