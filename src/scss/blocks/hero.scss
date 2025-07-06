@@ -6,6 +6,8 @@
     height: 100vh;
 
     &__swipe {
+        pointer-events: none;
+        display: none;
         margin: 2em auto 0 auto;
         animation: bobbing 3s ease-in-out infinite; /* Apply the animation */
     }
@@ -188,7 +190,9 @@
 @media #{vars.$small} {
     .hero {
         height: auto;
-
+        &__swipe {
+            display: flex;
+        }
         &__bg {
             height: 60px;
             left: 0;
