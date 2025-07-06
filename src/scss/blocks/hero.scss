@@ -16,11 +16,15 @@
         height: 100%;
         position: absolute;
         bottom: 0;
-        left: -11px;
+        left: -33px;
         overflow: hidden;
         background-image: url("../assets/images/bg-main.png");
         background-size: contain;
         transform: scale(-1, -1);
+
+        &--mobile {
+            display: none;
+        }
     }
 
     &__social {
@@ -121,6 +125,10 @@
             object-fit: cover;
             object-position: center center;
             cursor: pointer;
+
+            will-change: transform;
+            transform: translateZ(0); /* форсирует аппаратное ускорение */
+            touch-action: none; /* отключает нежелательное поведение при касании */
         }
     }
 }
@@ -141,7 +149,7 @@
 @media #{vars.$medium} {
     .hero {
         &__bg {
-            left: -60px;
+            left: -62px;
         }
 
         &__content {
@@ -152,6 +160,24 @@
 
 @media #{vars.$small} {
     .hero {
+        height: auto;
+
+        &__bg {
+            height: 60px;
+            left: 0;
+            top: -42px;
+            width: 100%;
+            background-image: url("../assets/images/bg-mobile.png");
+            transform: none;
+
+            &--mobile {
+                display: flex;
+                top: auto;
+                bottom: -40px;
+                transform: scale(-1, -1);
+            }
+        }
+
         &__content {
             flex-direction: column;
         }

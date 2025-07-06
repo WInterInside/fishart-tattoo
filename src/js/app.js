@@ -6,13 +6,13 @@ class TattooAnimation {
 
         const defaultOptions = {
             fps: 3,
-            imageUrls: []
+            imagePathPattern: index => `assets/images/slides/${index}.jpg`,
+            maxFramesToCheck: 100
         };
 
         this.options = { ...defaultOptions, ...options };
         this.FPS = this.options.fps;
         this.FRAME_INTERVAL = 1000 / this.FPS;
-        this.imagePaths = this.options.imageUrls;
         this.frames = [];
         this.currentFrameIndex = 0;
         this.lastTimestamp = 0;
@@ -24,13 +24,18 @@ class TattooAnimation {
         window.addEventListener("resize", () => this.resizeCanvas());
 
         this.addInteractionListeners();
-        this.preloadAndStartAnimation();
+        this.loadAllFramesAndStart();
     }
 
     resizeCanvas() {
         const rect = this.canvas.getBoundingClientRect();
-        this.canvas.width = rect.width * this.dpr;
-        this.canvas.height = rect.height * this.dpr;
+        const newWidth = rect.width * this.dpr;
+        const newHeight = rect.height * this.dpr;
+
+        if (this.canvas.width === newWidth && this.canvas.height === newHeight) return;
+
+        this.canvas.width = newWidth;
+        this.canvas.height = newHeight;
         this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
     }
 
@@ -38,7 +43,7 @@ class TattooAnimation {
         return new Promise((resolve, reject) => {
             const img = new Image();
             img.onload = () => resolve(img);
-            img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
+            img.onerror = () => reject(new Error(`Image not found: ${src}`));
             img.src = src;
         });
     }
@@ -55,13 +60,11 @@ class TattooAnimation {
         let drawWidth, drawHeight, offsetX, offsetY;
 
         if (imgRatio > canvasRatio) {
-            // Изображение шире канваса — обрезаем по ширине
             drawHeight = canvasHeight;
             drawWidth = img.width * (canvasHeight / img.height);
             offsetX = (canvasWidth - drawWidth) / 2;
             offsetY = 0;
         } else {
-            // Изображение выше канваса — обрезаем по высоте
             drawWidth = canvasWidth;
             drawHeight = img.height * (canvasWidth / img.width);
             offsetX = 0;
@@ -71,56 +74,55 @@ class TattooAnimation {
         this.ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
     }
 
-    async preloadAndStartAnimation() {
-        try {
-            // Загрузим только первый кадр и сразу его покажем
-            const firstImage = await this.loadImage(this.imagePaths[0]);
-            this.drawFrame(firstImage);
-
-            // Параллельно загрузим все изображения
-            const images = await Promise.all(this.imagePaths.map(path => this.loadImage(path)));
-            this.frames = images;
-
-            // Начинаем анимацию после полной загрузки
-            this.animate(); // 🟢 ЗАПУСКАЕМ анимацию через setTimeout
-        } catch (err) {
-            console.error("Error loading animation frames:", err);
+    async loadAllFramesAndStart() {
+        const frames = [];
+        for (let i = 0; i < this.options.maxFramesToCheck; i++) {
+            const path = this.options.imagePathPattern(i);
+            try {
+                const img = await this.loadImage(path);
+                frames.push(img);
+            } catch (err) {
+                console.warn(`Stopped loading at missing frame: ${path}`);
+                break; // остановка при первой ошибке
+            }
         }
-    }
 
-    animate() {
-        if (this.isPaused || this.frames.length === 0) {
-            this.animationTimer = setTimeout(() => this.animate(), this.FRAME_INTERVAL);
+        if (frames.length === 0) {
+            console.error("No frames loaded.");
             return;
         }
 
-        this.drawFrame(this.frames[this.currentFrameIndex]);
-        this.currentFrameIndex = (this.currentFrameIndex + 1) % this.frames.length;
+        this.frames = frames;
+        this.drawFrame(this.frames[0]);
+        requestAnimationFrame(this.boundAnimate);
+    }
 
-        this.animationTimer = setTimeout(() => this.animate(), this.FRAME_INTERVAL);
+    animate(timestamp) {
+        if (!this.lastTimestamp) this.lastTimestamp = timestamp;
+
+        const elapsed = timestamp - this.lastTimestamp;
+
+        if (!this.isPaused && this.frames.length > 0 && elapsed >= this.FRAME_INTERVAL) {
+            this.drawFrame(this.frames[this.currentFrameIndex]);
+            this.currentFrameIndex = (this.currentFrameIndex + 1) % this.frames.length;
+            this.lastTimestamp = timestamp;
+        }
+
+        requestAnimationFrame(this.boundAnimate);
     }
 
     addInteractionListeners() {
-        // Мышь
         this.canvas.addEventListener("mousedown", () => this.isPaused = true);
         this.canvas.addEventListener("mouseup", () => this.isPaused = false);
-        this.canvas.addEventListener("mouseleave", () => this.isPaused = false); // если мышь вышла — снимаем паузу
+        this.canvas.addEventListener("mouseleave", () => this.isPaused = false);
 
-        // Сенсорные устройства
         this.canvas.addEventListener("touchstart", () => this.isPaused = true, { passive: true });
         this.canvas.addEventListener("touchend", () => this.isPaused = false);
-        this.canvas.addEventListener("touchcancel", () => this.isPaused = false); // например, если палец ушел за экран
+        this.canvas.addEventListener("touchcancel", () => this.isPaused = false);
     }
 }
 
-// Запуск после загрузки DOM
-window.addEventListener('DOMContentLoaded', () => {
-    // Определите количество кадров здесь, например, 25
-    const numberOfFrames = 25; // <--- Здесь вы задаете количество кадров
-
-    const imageUrls = Array.from({ length: numberOfFrames }, (_, i) => `assets/images/slides/${i}.jpg`);
-
-    const tattoo = new TattooAnimation('#tattoo-canvas', {
-        imageUrls: imageUrls
-    });
+const tattoo = new TattooAnimation('#tattoo-canvas', {
+    imagePathPattern: index => `assets/images/slides/${index}.jpg`,
+    maxFramesToCheck: 100
 });
