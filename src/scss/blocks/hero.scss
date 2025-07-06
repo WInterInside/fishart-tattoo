@@ -5,6 +5,11 @@
     background-color: #000;
     height: 100vh;
 
+    &__swipe {
+        margin: 2em auto 0 auto;
+        animation: bobbing 3s ease-in-out infinite; /* Apply the animation */
+    }
+
     &__content {
         display: flex;
         height: 100%;
@@ -102,6 +107,7 @@
         padding: 2em 1em;
         text-align: center;
         overflow: hidden;
+        min-height: 100vh;
     }
 
     &__avatar {
@@ -126,7 +132,7 @@
     &__preview {
         width: 50%;
         aspect-ratio: 1;
-        min-height: 60vh;
+        min-height: 100vh;
         overflow: hidden;
         position: relative;
 
@@ -142,13 +148,10 @@
 
             will-change: transform, contents; /* Добавили contents */
             transform: translateZ(0);
-            touch-action: none;
         }
-        /* Когда контейнер hero__preview получает класс .is-ready */
         &.is-ready {
             & canvas {
                 opacity: 1; /* Показываем канвас */
-                pointer-events: auto; /* Канвас начинает реагировать на события */
             }
             & img {
                 opacity: 0; /* Скрываем изображение */
@@ -214,5 +217,19 @@
             width: 100%;
             justify-content: center;
         }
+    }
+}
+
+@keyframes bobbing {
+    0%,
+    100% {
+        transform: translateY(
+            0
+        ); /* Start and end at the original vertical position */
+    }
+    50% {
+        transform: translateY(
+            -10px
+        ); /* Move 10 pixels up at the midpoint of the animation */
     }
 }
