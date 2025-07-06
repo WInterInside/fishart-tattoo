@@ -5,7 +5,7 @@ class TattooAnimation {
         this.dpr = window.devicePixelRatio || 1;
 
         const defaultOptions = {
-            fps: 1,
+            fps: 3,
             imageUrls: []
         };
 
@@ -16,11 +16,14 @@ class TattooAnimation {
         this.frames = [];
         this.currentFrameIndex = 0;
         this.lastTimestamp = 0;
+        this.isPaused = false;
 
         this.boundAnimate = this.animate.bind(this);
 
         this.resizeCanvas();
         window.addEventListener("resize", () => this.resizeCanvas());
+
+        this.addInteractionListeners();
         this.preloadAndStartAnimation();
     }
 
@@ -68,32 +71,56 @@ class TattooAnimation {
         this.ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
     }
 
+    async preloadAndStartAnimation() {
+        try {
+            // Загрузим только первый кадр и сразу его покажем
+            const firstImage = await this.loadImage(this.imagePaths[0]);
+            this.drawFrame(firstImage);
 
-    preloadAndStartAnimation() {
-        Promise.all(this.imagePaths.map(path => this.loadImage(path)))
-            .then(images => {
-                this.frames = images;
-                this.drawFrame(this.frames[0]);
-                requestAnimationFrame(this.boundAnimate);
-            })
-            .catch(err => console.error("Error loading animation frames:", err));
+            // Параллельно загрузим все изображения
+            const images = await Promise.all(this.imagePaths.map(path => this.loadImage(path)));
+            this.frames = images;
+
+            // Начинаем анимацию после полной загрузки
+            this.animate(); // 🟢 ЗАПУСКАЕМ анимацию через setTimeout
+        } catch (err) {
+            console.error("Error loading animation frames:", err);
+        }
     }
 
-    animate(timestamp) {
-        if (!this.lastTimestamp) this.lastTimestamp = timestamp;
-        const delta = timestamp - this.lastTimestamp;
-        if (delta >= this.FRAME_INTERVAL) {
-            this.drawFrame(this.frames[this.currentFrameIndex]);
-            this.currentFrameIndex = (this.currentFrameIndex + 1) % this.frames.length;
-            this.lastTimestamp = timestamp - (delta % this.FRAME_INTERVAL);
+    animate() {
+        if (this.isPaused || this.frames.length === 0) {
+            this.animationTimer = setTimeout(() => this.animate(), this.FRAME_INTERVAL);
+            return;
         }
-        requestAnimationFrame(this.boundAnimate);
+
+        this.drawFrame(this.frames[this.currentFrameIndex]);
+        this.currentFrameIndex = (this.currentFrameIndex + 1) % this.frames.length;
+
+        this.animationTimer = setTimeout(() => this.animate(), this.FRAME_INTERVAL);
+    }
+
+    addInteractionListeners() {
+        // Мышь
+        this.canvas.addEventListener("mousedown", () => this.isPaused = true);
+        this.canvas.addEventListener("mouseup", () => this.isPaused = false);
+        this.canvas.addEventListener("mouseleave", () => this.isPaused = false); // если мышь вышла — снимаем паузу
+
+        // Сенсорные устройства
+        this.canvas.addEventListener("touchstart", () => this.isPaused = true, { passive: true });
+        this.canvas.addEventListener("touchend", () => this.isPaused = false);
+        this.canvas.addEventListener("touchcancel", () => this.isPaused = false); // например, если палец ушел за экран
     }
 }
 
 // Запуск после загрузки DOM
 window.addEventListener('DOMContentLoaded', () => {
+    // Определите количество кадров здесь, например, 25
+    const numberOfFrames = 25; // <--- Здесь вы задаете количество кадров
+
+    const imageUrls = Array.from({ length: numberOfFrames }, (_, i) => `assets/images/slides/${i}.jpg`);
+
     const tattoo = new TattooAnimation('#tattoo-canvas', {
-        imageUrls: Array.from({ length: 14 }, (_, i) => `assets/images/slides/${i + 1}.jpg`)
+        imageUrls: imageUrls
     });
 });

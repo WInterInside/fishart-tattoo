@@ -1,4 +1,5 @@
 @use "../base/variables" as vars;
+@use "../base/mixins" as mixins;
 
 .hero {
     background-color: #000;
@@ -7,6 +8,19 @@
     &__content {
         display: flex;
         height: 100%;
+        font-size: 24px;
+    }
+
+    &__bg {
+        width: 100px;
+        height: 100%;
+        position: absolute;
+        bottom: 0;
+        left: -11px;
+        overflow: hidden;
+        background-image: url("../assets/images/bg-main.png");
+        background-size: contain;
+        transform: scale(-1, -1);
     }
 
     &__social {
@@ -15,6 +29,7 @@
         gap: 30px;
         justify-content: center;
         margin-top: 1em;
+        margin-bottom: 1em;
 
         & svg {
             width: 30px;
@@ -23,6 +38,7 @@
     }
 
     &__social-link {
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -30,22 +46,52 @@
         height: 40px;
         border-radius: 50%;
         padding: 4px;
-        transition: box-shadow 0.3s;
+
+        color: #fff;
+
+        &::before {
+            @include mixins.pseudo();
+            top: -5px;
+            left: -5px;
+            width: 120%;
+            height: 120%;
+            background-color: transparent;
+            mask-image: url("../assets/images/mask.png");
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            transform: rotate(90deg);
+
+            -webkit-mask-image: url("../assets/images/mask.png");
+            -webkit-mask-size: cover;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        & svg {
+            position: relative;
+            z-index: 1;
+            fill: currentColor;
+        }
     }
 
     &__info {
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
         width: 50%;
-        padding: 1em;
+        padding: 2em 1em;
         text-align: center;
     }
 
     &__avatar {
         margin: 0 auto;
-        width: 50%;
+        width: 40%;
         aspect-ratio: 1;
+        flex-shrink: 0;
         border-radius: 50%;
         overflow: hidden;
         position: relative;
@@ -74,6 +120,7 @@
             width: 100%;
             object-fit: cover;
             object-position: center center;
+            cursor: pointer;
         }
     }
 }
@@ -81,7 +128,24 @@
 @media (hover: hover) {
     .hero {
         &__social-link:hover {
-            box-shadow: 0px 0px 30px -1px #d60000;
+            &::before {
+                background-color: #fff;
+                transform: none;
+            }
+
+            color: red;
+        }
+    }
+}
+
+@media #{vars.$medium} {
+    .hero {
+        &__bg {
+            left: -60px;
+        }
+
+        &__content {
+            font-size: 18px;
         }
     }
 }
@@ -91,9 +155,11 @@
         &__content {
             flex-direction: column;
         }
+
         &__preview {
             width: 100%;
         }
+
         &__info {
             width: 100%;
             justify-content: center;
