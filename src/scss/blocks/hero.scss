@@ -89,6 +89,7 @@
         width: 50%;
         padding: 2em 1em;
         text-align: center;
+        overflow: hidden;
     }
 
     &__avatar {
@@ -117,7 +118,8 @@
         overflow: hidden;
         position: relative;
 
-        & canvas {
+        & canvas,
+        & img {
             position: absolute;
             inset: 0;
             height: 100%;
@@ -126,9 +128,19 @@
             object-position: center center;
             cursor: pointer;
 
-            will-change: transform;
-            transform: translateZ(0); /* форсирует аппаратное ускорение */
-            touch-action: none; /* отключает нежелательное поведение при касании */
+            will-change: transform, contents; /* Добавили contents */
+            transform: translateZ(0);
+            touch-action: none;
+        }
+        /* Когда контейнер hero__preview получает класс .is-ready */
+        &.is-ready {
+            & canvas {
+                opacity: 1; /* Показываем канвас */
+                pointer-events: auto; /* Канвас начинает реагировать на события */
+            }
+            & img {
+                opacity: 0; /* Скрываем изображение */
+            }
         }
     }
 }
