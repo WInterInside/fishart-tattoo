@@ -182,7 +182,7 @@
         }
 
         &__content {
-            font-size: 18px;
+            font-size: 22px;
         }
     }
 }
@@ -190,9 +190,15 @@
 @media #{vars.$small} {
     .hero {
         height: auto;
+
+        &__avatar {
+            width: 50%;
+        }
+
         &__swipe {
             display: flex;
         }
+
         &__bg {
             height: 60px;
             left: 0;
@@ -231,6 +237,7 @@
             0
         ); /* Start and end at the original vertical position */
     }
+
     50% {
         transform: translateY(
             -10px
