@@ -8,14 +8,14 @@
     &__swipe {
         pointer-events: none;
         display: none;
-        margin: 2em auto 0 auto;
+        margin: 1em auto 0 auto;
         animation: bobbing 3s ease-in-out infinite; /* Apply the animation */
     }
 
     &__content {
         display: flex;
         height: 100%;
-        font-size: 24px;
+        font-size: 30px;
 
         & h1 {
             position: absolute;
@@ -83,14 +83,14 @@
             mask-size: contain;
             mask-repeat: no-repeat;
             mask-position: center;
-            transform: rotate(90deg);
+            transform: rotate(90deg) scale(0);
 
             -webkit-mask-image: url("../assets/images/mask.png");
             -webkit-mask-size: cover;
             -webkit-mask-repeat: no-repeat;
             -webkit-mask-position: center;
 
-            transition: transform 0.3s, background-color 0.3s;
+            transition: transform 0.5s, background-color 0.5s;
         }
 
         & svg {
@@ -182,7 +182,7 @@
         }
 
         &__content {
-            font-size: 22px;
+            font-size: 24px;
         }
     }
 }
