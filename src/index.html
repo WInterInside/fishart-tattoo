@@ -8,7 +8,7 @@
     "favicon":"assets/favicons/favicon",
 })
 
-<body>
+<body class="is-overflow">
     @@include('components/page-blocks/_header.html')
 
     <div className="wrapper" data-element="wrapper">
@@ -73,6 +73,10 @@
                     </div>
                 </div>
             </section>
+
+			<div class="preloader" data-element="preloader">
+				<img src="assets/images/preloader.jpg" alt="">
+			</div>
         </main>
 
         @@include('components/page-blocks/_footer.html')

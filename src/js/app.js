@@ -1,20 +1,50 @@
+class App {
+    constructor() {}
+
+    init() {
+        this.initTattooAnimation();
+        this.handlePreloader();
+    }
+
+    initTattooAnimation() {
+        this.tattoo = new TattooAnimation('#tattoo-canvas', {
+            imagePathPattern: index => `assets/images/slides/${index}.jpg`,
+            maxFramesToCheck: 20,
+            maxCanvasLogicalWidth: 1000,
+            maxCanvasLogicalHeight: 1000
+        });
+    }
+
+	handlePreloader() {
+		window.addEventListener('load', () => {
+			setTimeout(() => {
+				const preloader = document.querySelector('[data-element="preloader"]');
+				if (preloader) {
+					preloader.classList.add('is-loaded');
+				}
+
+				document.body.classList.remove('is-overflow');
+			}, 3000);
+		});
+	}
+}
 class TattooAnimation {
     constructor(canvasSelector, options = {}) {
         this.canvas = document.querySelector(canvasSelector);
         this.ctx = this.canvas.getContext("2d");
         this.dpr = window.devicePixelRatio || 1;
 
-        this.parentElement = this.canvas.closest('.hero__preview'); 
+        this.parentElement = this.canvas.closest('.hero__preview');
         if (!this.parentElement) {
             console.error('Родительский элемент .hero__preview не найден для канваса.');
         }
 
         const defaultOptions = {
-            fps: 3,
+            fps: 2,
             imagePathPattern: index => `assets/images/slides/${index}.jpg`,
             maxFramesToCheck: 100,
-            maxCanvasLogicalWidth: 1000, 
-            maxCanvasLogicalHeight: 1000 
+            maxCanvasLogicalWidth: 1000,
+            maxCanvasLogicalHeight: 1000
         };
 
         this.options = { ...defaultOptions, ...options };
@@ -103,7 +133,7 @@ class TattooAnimation {
 
         for (let i = 0; i < this.options.maxFramesToCheck; i++) {
             const path = this.options.imagePathPattern(i);
-            promises.push(this.loadImage(path)); 
+            promises.push(this.loadImage(path));
         }
 
         const results = await Promise.allSettled(promises);
@@ -118,7 +148,7 @@ class TattooAnimation {
                 loadedCount++;
             } else {
                 console.warn(`Stopped loading at missing frame: ${this.options.imagePathPattern(i)}`, result.reason);
-                break; 
+                break;
             }
         }
 
@@ -192,10 +222,7 @@ class TattooAnimation {
     }
 }
 
-// Инициализация
-const tattoo = new TattooAnimation('#tattoo-canvas', {
-    imagePathPattern: index => `assets/images/slides/${index}.jpg`,
-    maxFramesToCheck: 20,
-    maxCanvasLogicalWidth: 1000,
-    maxCanvasLogicalHeight: 1000
+document.addEventListener('DOMContentLoaded', () => {
+    const app = new App();
+    app.init();
 });
