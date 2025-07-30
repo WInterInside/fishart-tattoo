@@ -172,8 +172,22 @@
                 background-color: #fff;
                 transform: none;
             }
+        }
 
-            color: red;
+        &__social-link--tg:hover {
+            color: rgb(51, 144, 236);
+        }
+        &__social-link--vk:hover {
+            color: #07f;
+        }
+        &__social-link--phone:hover {
+            color: #0ece00;
+        }
+        &__social-link--inst:hover {
+            color: rgb(226, 31, 177);
+        }
+        &__social-link--ym:hover {
+            color: #f43;
         }
     }
 }
