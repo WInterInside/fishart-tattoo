@@ -8,7 +8,7 @@
     &__swipe {
         pointer-events: none;
         display: none;
-        margin: 1em auto 0 auto;
+        margin: 0 auto;
         animation: bobbing 3s ease-in-out infinite;
     }
 
@@ -228,6 +228,7 @@
 
         &__info {
             width: 100%;
+            gap: 1.5rem;
             justify-content: center;
         }
     }

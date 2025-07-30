@@ -15,19 +15,20 @@ class App {
         });
     }
 
-	handlePreloader() {
-		window.addEventListener('load', () => {
-			setTimeout(() => {
-				const preloader = document.querySelector('[data-element="preloader"]');
-				if (preloader) {
-					preloader.classList.add('is-loaded');
-				}
+    handlePreloader() {
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const preloader = document.querySelector('[data-element="preloader"]');
+                if (preloader) {
+                    preloader.classList.add('is-loaded');
+                }
 
-				document.body.classList.remove('is-overflow');
-			}, 3000);
-		});
-	}
+                document.body.classList.remove('is-overflow');
+            }, 1500);
+        });
+    }
 }
+
 class TattooAnimation {
     constructor(canvasSelector, options = {}) {
         this.canvas = document.querySelector(canvasSelector);
