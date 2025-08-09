@@ -105,7 +105,7 @@
     &__info {
         position: relative;
         display: flex;
-        gap: 2rem;
+        gap: 3rem;
         flex-direction: column;
         justify-content: center;
         width: 50%;
@@ -242,7 +242,7 @@
 
         &__info {
             width: 100%;
-            gap: 1.5rem;
+            gap: 2rem;
             justify-content: flex-start;
         }
     }
