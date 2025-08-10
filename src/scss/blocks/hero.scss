@@ -37,7 +37,8 @@
     &__bg {
         width: 100px;
         height: 100%;
-        position: absolute;
+        position: fixed;
+        z-index: 99;
         bottom: 0;
         left: -33px;
         overflow: hidden;
@@ -217,6 +218,7 @@
         }
 
         &__bg {
+            position: absolute;
             height: 60px;
             left: 0;
             top: -42px;
@@ -227,7 +229,7 @@
             &--mobile {
                 display: flex;
                 top: auto;
-                bottom: -40px;
+                // bottom: -40px;
                 transform: scale(-1, -1);
             }
         }
@@ -237,13 +239,12 @@
         }
 
         &__preview {
-            width: 100%;
+            display: none;
         }
 
         &__info {
             width: 100%;
             gap: 2rem;
-            justify-content: flex-start;
         }
     }
 }

@@ -4,6 +4,7 @@ class App {
     init() {
         this.initTattooAnimation();
         this.handlePreloader();
+        this.initSliders();
     }
 
     initTattooAnimation() {
@@ -13,6 +14,10 @@ class App {
             maxCanvasLogicalWidth: 1000,
             maxCanvasLogicalHeight: 1000
         });
+    }
+
+    initSliders() {
+        this.sliders = new Sliders();
     }
 
     handlePreloader() {
@@ -57,6 +62,10 @@ class TattooAnimation {
         this.isIntersecting = false;
         this.animationFrameId = null;
         this.boundAnimate = this.animate.bind(this);
+
+        if (window.matchMedia('(max-width: 1023px)').matches) {
+            return;
+        }
 
         this.resizeCanvas();
         window.addEventListener("resize", () => this.resizeCanvas());
@@ -222,6 +231,45 @@ class TattooAnimation {
         observer.observe(this.canvas);
     }
 }
+
+class Sliders {
+    constructor() {
+        this.initSliders();
+    }
+
+    initSliders() {
+        tns({
+            container: ".works__tattoo",
+            items: 3,
+            mouseDrag: true,
+            slideBy: "page",
+            swipeAngle: false,
+            controls: false,
+            gutter: 20,
+            speed: 400,
+            responsive: {
+                0: { items: 1 },
+                900: { items: 3 }
+            }
+        });
+
+        tns({
+            container: ".works__arts",
+            items: 3,
+            mouseDrag: true,
+            slideBy: "page",
+            swipeAngle: false,
+            controls: false,
+            gutter: 20,
+            speed: 400,
+            responsive: {
+                0: { items: 1 },
+                900: { items: 3 }
+            }
+        });
+    }
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const app = new App();

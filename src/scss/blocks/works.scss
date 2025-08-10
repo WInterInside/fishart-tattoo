@@ -1,0 +1,23 @@
+@use "../base/variables" as vars;
+@use "../base/mixins" as mixins;
+
+.works {
+    &__caption {
+        font-size: 28px;
+        width: 100%;
+        text-align: center;
+        padding: 26px 0 0 0;
+        & span {
+            font-weight: bold;
+            color: rgb(255, 69, 69);
+        }
+    }
+}
+
+@media #{vars.$small} {
+    .works {
+        &__caption {
+            font-size: 22px;
+        }
+    }
+}

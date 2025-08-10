@@ -18,6 +18,11 @@ body {
     text-rendering: optimizeLegibility;
 }
 
+#tns1-ow > button,
+#tns2-ow > button {
+    display: none;
+}
+
 body {
     font-family: "Montserrat", sans-serif;
     font-weight: 400;

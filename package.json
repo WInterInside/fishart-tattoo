@@ -30,6 +30,7 @@
     "sass": "^1.89.2"
   },
   "dependencies": {
-    "fs-extra": "^11.3.0"
+    "fs-extra": "^11.3.0",
+    "tiny-slider": "^2.9.4"
   }
 }

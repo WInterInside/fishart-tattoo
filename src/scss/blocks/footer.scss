@@ -3,17 +3,16 @@
 
 .footer {
     display: flex;
+    align-items: center;
     justify-content: center;
-    padding: 30px 0;
+    height: 60px;
     width: 100%;
-    position: fixed;
-    bottom: 0;
 
     &__link {
-        font-size: 14px;
+        font-size: 10px;
         color: rgb(4, 72, 72);
         background-color: #fff;
-        padding: 2px 10px;
+        padding: 4px 10px;
         border-radius: 20px;
         box-shadow: 0px 0px 15px 0px rgb(6, 227, 227);
         transition: box-shadow 0.3s;
