@@ -232,46 +232,6 @@ class TattooAnimation {
     }
 }
 
-// базовая версия - дергается
-// class Sliders {
-//     constructor() {
-//         this.initSliders();
-//     }
-
-//     initSliders() {
-//         tns({
-//             container: ".works__tattoo",
-//             items: 3,
-//             mouseDrag: true,
-//             slideBy: "page",
-//             swipeAngle: false,
-//             controls: false,
-//             gutter: 20,
-//             speed: 400,
-//             responsive: {
-//                 0: { items: 1 },
-//                 900: { items: 3 }
-//             }
-//         });
-
-//         tns({
-//             container: ".works__arts",
-//             items: 3,
-//             mouseDrag: true,
-//             slideBy: "page",
-//             swipeAngle: false,
-//             controls: false,
-//             gutter: 20,
-//             speed: 400,
-//             responsive: {
-//                 0: { items: 1 },
-//                 900: { items: 3 }
-//             }
-//         });
-//     }
-// }
-
-// попытка пофиксить
 class Sliders {
     constructor() {
         this.initSliders();
@@ -336,64 +296,6 @@ class Sliders {
         }, { passive: false });
     }
 }
-
-// жестко блокируем прокрутку
-// class Sliders {
-//     constructor() {
-//         this.initSliders();
-//         this.lockScrollOnTouch(".works__tattoo");
-//         this.lockScrollOnTouch(".works__arts");
-//     }
-
-//     initSliders() {
-//         tns({
-//             container: ".works__tattoo",
-//             items: 3,
-//             mouseDrag: true,
-//             slideBy: "page",
-//             swipeAngle: false,
-//             controls: false,
-//             gutter: 20,
-//             speed: 400,
-//             responsive: {
-//                 0: { items: 1 },
-//                 900: { items: 3 }
-//             }
-//         });
-
-//         tns({
-//             container: ".works__arts",
-//             items: 3,
-//             mouseDrag: true,
-//             slideBy: "page",
-//             swipeAngle: false,
-//             controls: false,
-//             gutter: 20,
-//             speed: 400,
-//             responsive: {
-//                 0: { items: 1 },
-//                 900: { items: 3 }
-//             }
-//         });
-//     }
-
-//     lockScrollOnTouch(selector) {
-//         const slider = document.querySelector(selector);
-
-//         const preventScroll = e => e.preventDefault();
-
-//         slider.addEventListener("touchstart", () => {
-//             document.body.style.overflow = "hidden"; // убираем прокрутку страницы
-//             document.addEventListener("touchmove", preventScroll, { passive: false });
-//         }, { passive: false });
-
-//         slider.addEventListener("touchend", () => {
-//             document.body.style.overflow = ""; // возвращаем прокрутку
-//             document.removeEventListener("touchmove", preventScroll, { passive: false });
-//         }, { passive: false });
-//     }
-// }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const app = new App();

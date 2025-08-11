@@ -14,6 +14,11 @@
 
     &__text {
         margin: 0;
+
+        & span {
+            font-weight: bold;
+            color: rgb(255, 69, 69);
+        }
     }
 
     &__content {
@@ -31,24 +36,6 @@
             clip: rect(0, 0, 0, 0);
             white-space: nowrap;
             border: 0;
-        }
-    }
-
-    &__bg {
-        display: none;
-        width: 100px;
-        height: 100%;
-        position: fixed;
-        z-index: 99;
-        bottom: 0;
-        left: -33px;
-        overflow: hidden;
-        background-image: url("../assets/images/bg-main.png");
-        background-size: contain;
-        transform: scale(-1, -1);
-
-        &--mobile {
-            display: none;
         }
     }
 
@@ -125,6 +112,7 @@
         border-radius: 50%;
         overflow: hidden;
         position: relative;
+        animation: neon 3s ease-in-out infinite;
 
         & img {
             position: absolute;
@@ -196,10 +184,6 @@
 
 @media #{vars.$medium} {
     .hero {
-        &__bg {
-            left: -62px;
-        }
-
         &__content {
             font-size: 24px;
         }
@@ -216,23 +200,6 @@
 
         &__swipe {
             display: flex;
-        }
-
-        &__bg {
-            position: absolute;
-            height: 60px;
-            left: 0;
-            top: -42px;
-            width: 100%;
-            background-image: url("../assets/images/bg-mobile.png");
-            transform: none;
-
-            &--mobile {
-                display: flex;
-                top: auto;
-                // bottom: -40px;
-                transform: scale(-1, -1);
-            }
         }
 
         &__content {
@@ -262,5 +229,16 @@
         transform: translateY(
             -10px
         ); /* Move 10 pixels up at the midpoint of the animation */
+    }
+}
+
+@keyframes neon {
+    0%,
+    100% {
+        box-shadow: 0 0 22px 0 rgb(0, 255, 255);
+    }
+
+    50% {
+        box-shadow: 0 0 28px 0 rgb(0, 255, 255);
     }
 }
