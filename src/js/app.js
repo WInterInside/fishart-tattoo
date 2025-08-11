@@ -232,9 +232,51 @@ class TattooAnimation {
     }
 }
 
+// базовая версия - дергается
+// class Sliders {
+//     constructor() {
+//         this.initSliders();
+//     }
+
+//     initSliders() {
+//         tns({
+//             container: ".works__tattoo",
+//             items: 3,
+//             mouseDrag: true,
+//             slideBy: "page",
+//             swipeAngle: false,
+//             controls: false,
+//             gutter: 20,
+//             speed: 400,
+//             responsive: {
+//                 0: { items: 1 },
+//                 900: { items: 3 }
+//             }
+//         });
+
+//         tns({
+//             container: ".works__arts",
+//             items: 3,
+//             mouseDrag: true,
+//             slideBy: "page",
+//             swipeAngle: false,
+//             controls: false,
+//             gutter: 20,
+//             speed: 400,
+//             responsive: {
+//                 0: { items: 1 },
+//                 900: { items: 3 }
+//             }
+//         });
+//     }
+// }
+
+// попытка пофиксить
 class Sliders {
     constructor() {
         this.initSliders();
+        this.preventVerticalScroll(".works__tattoo");
+        this.preventVerticalScroll(".works__arts");
     }
 
     initSliders() {
@@ -268,7 +310,89 @@ class Sliders {
             }
         });
     }
+
+    preventVerticalScroll(selector) {
+        const slider = document.querySelector(selector);
+        let startX, startY, isScrollingVertically;
+
+        slider.addEventListener("touchstart", e => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            isScrollingVertically = undefined;
+        }, { passive: false });
+
+        slider.addEventListener("touchmove", e => {
+            const deltaX = e.touches[0].clientX - startX;
+            const deltaY = e.touches[0].clientY - startY;
+
+            if (typeof isScrollingVertically === "undefined") {
+                // Определяем направление
+                isScrollingVertically = Math.abs(deltaY) > Math.abs(deltaX);
+            }
+
+            if (!isScrollingVertically) {
+                e.preventDefault(); // блокируем вертикальный скролл
+            }
+        }, { passive: false });
+    }
 }
+
+// жестко блокируем прокрутку
+// class Sliders {
+//     constructor() {
+//         this.initSliders();
+//         this.lockScrollOnTouch(".works__tattoo");
+//         this.lockScrollOnTouch(".works__arts");
+//     }
+
+//     initSliders() {
+//         tns({
+//             container: ".works__tattoo",
+//             items: 3,
+//             mouseDrag: true,
+//             slideBy: "page",
+//             swipeAngle: false,
+//             controls: false,
+//             gutter: 20,
+//             speed: 400,
+//             responsive: {
+//                 0: { items: 1 },
+//                 900: { items: 3 }
+//             }
+//         });
+
+//         tns({
+//             container: ".works__arts",
+//             items: 3,
+//             mouseDrag: true,
+//             slideBy: "page",
+//             swipeAngle: false,
+//             controls: false,
+//             gutter: 20,
+//             speed: 400,
+//             responsive: {
+//                 0: { items: 1 },
+//                 900: { items: 3 }
+//             }
+//         });
+//     }
+
+//     lockScrollOnTouch(selector) {
+//         const slider = document.querySelector(selector);
+
+//         const preventScroll = e => e.preventDefault();
+
+//         slider.addEventListener("touchstart", () => {
+//             document.body.style.overflow = "hidden"; // убираем прокрутку страницы
+//             document.addEventListener("touchmove", preventScroll, { passive: false });
+//         }, { passive: false });
+
+//         slider.addEventListener("touchend", () => {
+//             document.body.style.overflow = ""; // возвращаем прокрутку
+//             document.removeEventListener("touchmove", preventScroll, { passive: false });
+//         }, { passive: false });
+//     }
+// }
 
 
 document.addEventListener('DOMContentLoaded', () => {

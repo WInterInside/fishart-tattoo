@@ -14,6 +14,11 @@
             color: rgb(255, 69, 69);
         }
     }
+
+    &__tattoo,
+    &__arts {
+        touch-action: pan-y;
+    }
 }
 
 @media #{vars.$small} {
